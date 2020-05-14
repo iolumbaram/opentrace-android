@@ -3,6 +3,8 @@ package io.bluetrace.opentrace.streetpass
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
+import android.media.AudioManager
+import android.media.ToneGenerator
 import android.os.Build
 import android.os.Handler
 import io.bluetrace.opentrace.Utils
@@ -11,6 +13,8 @@ import io.bluetrace.opentrace.logging.CentralLog
 import io.bluetrace.opentrace.services.BluetoothMonitoringService.Companion.infiniteScanning
 import io.bluetrace.opentrace.status.Status
 import kotlin.properties.Delegates
+import android.widget.Toast
+
 
 class StreetPassScanner constructor(
     context: Context,
@@ -79,6 +83,13 @@ class StreetPassScanner constructor(
             scanResult?.let { result ->
                 val device = result.device
                 var rssi = result.rssi // get RSSI value
+                CentralLog.d(TAG, "RSSI: $rssi")
+
+                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+                if(rssi < -60){
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+                    Toast.makeText(context, "Too near", Toast.LENGTH_SHORT).show()
+                }
 
                 var txPower: Int? = null
 

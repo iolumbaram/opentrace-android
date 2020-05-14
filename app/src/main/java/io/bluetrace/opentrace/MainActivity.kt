@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main_new.*
 import io.bluetrace.opentrace.fragment.ForUseByOTCFragment
 import io.bluetrace.opentrace.fragment.HomeFragment
 import io.bluetrace.opentrace.logging.CentralLog
+import io.bluetrace.opentrace.buzzer.Buzzer
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +26,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_new)
-
+//        Buzzer buzzer = new Buzzer();
+//
         Utils.startBluetoothMonitoringService(this)
 
         LAYOUT_MAIN_ID = R.id.content
